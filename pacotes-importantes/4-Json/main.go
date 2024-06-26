@@ -7,7 +7,7 @@ import (
 
 type Conta struct {
 	Numero    int    `json:"numero,omitempty"`
-	Saldo     int    `json:"saldo,omitempty"`
+	Saldo     int    `json:"saldo,omitempty" validate:"gt=0"`
 	Descricao string `json:"-"`
 }
 
@@ -41,5 +41,13 @@ func main() {
 		panic(err)
 	}
 	println("Numero da conta 2 : ", contaX2.Numero, " com saldo: ", contaX2.Saldo)
+
+	jsonPuro2 := []byte(`{"numero": 4, "saldo": 0}`)
+	var contaX3 Conta
+	err = json.Unmarshal(jsonPuro2, &contaX3)
+	if err != nil {
+		panic(err)
+	}
+	println("Numero da conta 2 : ", contaX3.Numero, " com saldo: ", contaX3.Saldo)
 
 }

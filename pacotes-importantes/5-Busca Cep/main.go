@@ -53,9 +53,10 @@ func main() {
 			`{"CEP": "%s", "Logradouro": "%s","Complemento": "%s","Bairro": "%s", "Localidade": "%s", "UF": "%s", "DDD": %s}`,
 			data.Cep, data.Logradouro, data.Complemento, data.Bairro, data.Localidade, data.Uf, data.Ddd))
 
-		fmt.Printf(
-			`{"CEP": "%s", "Logradouro": "%s", "Complemento": "%s", "Bairro": "%s", "Localidade": "%s", "UF": "%s", "DDD": %s}`,
-			data.Cep, data.Logradouro, data.Complemento, data.Bairro, data.Localidade, data.Uf, data.Ddd)
+		fmt.Printf("Arquivo criado com sucesso!\n")
+		// fmt.Printf(
+		// 	`{"CEP": "%s", "Logradouro": "%s", "Complemento": "%s", "Bairro": "%s", "Localidade": "%s", "UF": "%s", "DDD": %s}`,
+		// 	data.Cep, data.Logradouro, data.Complemento, data.Bairro, data.Localidade, data.Uf, data.Ddd)
 	}
 
 }

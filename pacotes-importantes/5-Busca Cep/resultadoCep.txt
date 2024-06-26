@@ -1,1 +1,1 @@
-{"CEP": "01225-001", "Logradouro": "Rua Frederico Abranches","Complemento": "lado ímpar","Bairro": "Vila Buarque", "Localidade": "São Paulo", "UF": "SP", "DDD": 11}
+{"CEP": "06764-040", "Logradouro": "Rua José Maciel Neto","Complemento": "","Bairro": "Jardim Maria Rosa", "Localidade": "Taboão da Serra", "UF": "SP", "DDD": 11}

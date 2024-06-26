@@ -34,7 +34,7 @@ func main() {
 	println(Soma(mapFloat))
 	println(Soma(mapInteiro2))
 
-	println(Compara(10, 10.000000))
+	println(Compara(101, 101.901001001))
 
 	// Desativacao(&novoCliente)
 	// fmt.Println("--------Desativacao-------------")
