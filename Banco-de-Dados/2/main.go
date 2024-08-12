@@ -24,20 +24,20 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	db.AutoMigrate(&ProductOrm{})
+	// db.AutoMigrate(&ProductOrm{})
 	// // defer db.Close()
 
 	db.Create(&ProductOrm{
 		Name: "Notebook", Price: 1200.00,
 	})
 
-	// products := []ProductOrm{
-	// 	{Name: "Video", Price: 1500.00},
-	// 	{Name: "Mouse", Price: 70.00},
-	// 	{Name: "Keyboard", Price: 110.00},
-	// }
+	products := []ProductOrm{
+		{Name: "Video", Price: 1500.00},
+		{Name: "Mouse Ok", Price: 70.00},
+		{Name: "Keyboard", Price: 110.00},
+	}
 
-	// db.Create(&products)
+	db.Create(&products)
 
 	// //select one
 	// var product ProductOrm
@@ -49,15 +49,15 @@ func main() {
 	// fmt.Println("________________________________________________________________")
 
 	// //select all
-	var products []ProductOrm
+	// var products []ProductOrm
 	// // db.First(&product, 2)
 	// // fmt.Println(product)
 	// // fmt.Println("________________________________________________________________")
-	// db.Limit(2).Offset(2).Find(&products)
-	// for _, product := range products {
-	// 	fmt.Println(product)
-	// }
-	// fmt.Println("________________________________________________________________")
+	db.Limit(2).Offset(2).Find(&products)
+	for _, product := range products {
+		fmt.Println(product)
+	}
+	fmt.Println("________________________________________________________________")
 
 	// //select com where
 	// db.Where("price > ?", 100).Find(&products)
@@ -65,6 +65,13 @@ func main() {
 	// 	fmt.Println(product)
 	// }
 	// fmt.Println("________________________________________________________________")
+
+	// //select com where
+	db.Where("name LIKE ?", "%ok%").Find(&products)
+	for _, product := range products {
+		fmt.Println(product)
+	}
+	fmt.Println("________________________________________________________________")
 
 	//select one and update
 	// var p ProductOrm
@@ -75,9 +82,10 @@ func main() {
 	// db.Save(&p)
 
 	var p2 ProductOrm
-	db.First(&p2, 1)
-	fmt.Println(p2)
-	fmt.Println("________________________________________________________________")
+	// db.First(&p2, 2)
+	db.First(&p2)
+	// fmt.Println(p2)
+	// fmt.Println("________________________________________________________________")
 
 	// db.Delete(&p2)
 	db.Delete(&ProductOrm{}, p2.ID)
@@ -89,4 +97,15 @@ func main() {
 	}
 	fmt.Println("________________________________________________________________")
 
+	db.Find(&products)
+	for _, product := range products {
+		db.Delete(&product)
+	}
+	fmt.Println("________________________________________________________________")
+
+	db.Find(&products)
+	for _, product := range products {
+		fmt.Println(product)
+	}
+	fmt.Println("________________________________________________________________")
 }
