@@ -79,6 +79,32 @@ func TestFindAllProducts(t *testing.T) {
 	assert.Equal(t, products[9].Name, "Product 20")
 }
 
+func TestFindAllProductsWhenSortIsNull(t *testing.T) {
+	db, productDb := OpenConnection(t)
+
+	generateAndSaveProducts(t, db)
+
+	products, err := productDb.FindAll(-1, 10, "")
+	assert.NoError(t, err)
+	assert.Equal(t, products[0].Name, "Product 01")
+	assert.Equal(t, products[9].Name, "Product 10")
+
+	products, err = productDb.FindAll(2, 10, "asc")
+	assert.NoError(t, err)
+	assert.Equal(t, products[0].Name, "Product 11")
+	assert.Equal(t, products[9].Name, "Product 20")
+
+	products, err = productDb.FindAll(0, 0, "desc")
+	assert.NoError(t, err)
+	assert.Equal(t, products[0].Name, "Product 44")
+	assert.Equal(t, products[9].Name, "Product 35")
+
+	products, err = productDb.FindAll(2, 10, "")
+	assert.NoError(t, err)
+	assert.Equal(t, products[0].Name, "Product 11")
+	assert.Equal(t, products[9].Name, "Product 20")
+}
+
 func TestFindById(t *testing.T) {
 	product, _, productDb := CreateOneProduct(t)
 
@@ -173,6 +199,19 @@ func TestDeleteProductWithNullID(t *testing.T) {
 	nullID := ""
 	err := productDb.Delete(nullID)
 
+	assert.Equal(t, err.Error(), "record not found")
+
+	db.Migrator().DropTable(&entity.Product{})
+}
+
+func TestUpdateProductWithNonExistentID(t *testing.T) {
+	db, productDb := OpenConnection(t)
+
+	nonExistentID := ent.NewID()
+	product, _ := entity.NewProduct("Teste de Update", 233.45)
+	product.ID = nonExistentID
+
+	err := productDb.Update(product)
 	assert.Equal(t, err.Error(), "record not found")
 
 	db.Migrator().DropTable(&entity.Product{})
