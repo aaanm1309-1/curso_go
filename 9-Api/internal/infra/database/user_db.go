@@ -10,7 +10,6 @@ type User struct {
 }
 
 func NewUser(db *gorm.DB) *User {
-
 	return &User{DB: db}
 }
 

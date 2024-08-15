@@ -1,0 +1,11 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "ApiGo",
+            "database": "${workspaceFolder:curso_go}/9-Api/cmd/server/test.db"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}
