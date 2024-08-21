@@ -24,3 +24,17 @@ func (user *User) FindByEmail(email string) (*entity.User, error) {
 	}
 	return &userReturned, nil
 }
+
+func (user *User) FindAll(page, limit int, sort string) ([]entity.User, error) {
+	var usersReturned []entity.User
+	var err error
+	if sort != "asc" && sort != "desc" {
+		sort = "asc"
+	}
+	if page != 0 && page > 0 && limit != 0 && limit > 0 {
+		err = user.DB.Limit(limit).Offset((page - 1) * limit).Order("name " + sort).Find(&usersReturned).Error
+	} else {
+		err = user.DB.Order("name " + sort).Find(&usersReturned).Error
+	}
+	return usersReturned, err
+}

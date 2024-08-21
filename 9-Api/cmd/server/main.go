@@ -7,6 +7,8 @@ import (
 	"br.com.adrianomenezes/cursogo/9-Api/internal/entity"
 	"br.com.adrianomenezes/cursogo/9-Api/internal/infra/database"
 	"br.com.adrianomenezes/cursogo/9-Api/internal/webserver/handlers"
+	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/chi/v5/middleware"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -25,12 +27,21 @@ func main() {
 	userDB := database.NewUser(db)
 	userHandler := handlers.NewUserHandler(userDB)
 
-	http.HandleFunc("/users", userHandler.CreateUser)
-
 	productDB := database.NewProduct(db)
 	productHandler := handlers.NewProductHandler(productDB)
 
-	http.HandleFunc("/products", productHandler.CreateProduct)
-	http.ListenAndServe(":8000", nil)
+	r := chi.NewRouter()
+	r.Use(middleware.Logger)
+	r.Get("/products", productHandler.GetAllProducts)
+	r.Post("/products", productHandler.CreateProduct)
+	r.Get("/products/{id}", productHandler.GetProduct)
+	r.Put("/products/{id}", productHandler.UpdateProduct)
+	r.Delete("/products/{id}", productHandler.DeleteProduct)
+
+	r.Post("/users", userHandler.CreateUser)
+	r.Get("/users/{id}", userHandler.ListUser)
+	r.Get("/users", userHandler.GetAllUsers)
+
+	http.ListenAndServe(":8000", r)
 
 }
